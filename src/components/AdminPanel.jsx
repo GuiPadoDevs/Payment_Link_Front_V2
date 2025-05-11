@@ -223,3 +223,9 @@ const fieldContainer = {
     flexDirection: 'column',
     gap: '6px',
 };
+
+const labelStyle = {
+    fontSize: '14px',
+    color: '#000000',
+    fontWeight: 'bold',
+};
