@@ -229,3 +229,13 @@ const labelStyle = {
     color: '#000000',
     fontWeight: 'bold',
 };
+
+const inputStyle = {
+    padding: '12px',
+    fontSize: '14px',
+    borderRadius: '8px',
+    border: '1px solid #ccc',
+    backgroundColor: '#ffffff',
+    color: '#000000',
+    outlineColor: '#0063F7',
+};
