@@ -63,11 +63,23 @@ export default function PaymentForm() {
         formData.append('linkId', linkId);
 
         try {
-            const response = await axios.post('http://localhost:3001/api/submit-payment', formData, {
+            // TODO: Fazer dinamico link producao e local
+
+            // -> URL Local
+            // const response = await axios.post('http://localhost:3001/api/submit-payment', formData, {
+            //     onUploadProgress: (e) =>
+            //     setProgress(Math.round((e.loaded * 100) / (e.total || 1))),
+            //     headers: {
+            //     'Content-Type': 'multipart/form-data',
+            //     },
+            // });
+
+            // -> URL Producao
+            const response = await axios.post('https://payment-link-server-v2.vercel.app/api/submit-payment', formData, {
                 onUploadProgress: (e) =>
-                setProgress(Math.round((e.loaded * 100) / (e.total || 1))),
+                    setProgress(Math.round((e.loaded * 100) / (e.total || 1))),
                 headers: {
-                'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'multipart/form-data',
                 },
             });
 

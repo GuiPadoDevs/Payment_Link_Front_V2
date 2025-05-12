@@ -14,9 +14,16 @@ export default function AdminPanel() {
 
         setLoading(true);
         try {
-            console.log('Gerando link para:', redirectUrl);
+            // TODO: Fazer dinamico link producao e local
+
+            // -> URL Local
             // const apiUrl = process.env.REACT_APP_API_URL;
-            const { data } = await axios.post(`http://localhost:3001/api/generate-link`, {
+            // const { data } = await axios.post(`http://localhost:3001/api/generate-link`, {
+            //     redirectUrl
+            // });
+
+            // -> URL Producao
+            const { data } = await axios.post(`https://payment-link-server-v2.vercel.app/api/generate-link`, {
                 redirectUrl
             });
 
