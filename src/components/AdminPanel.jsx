@@ -14,10 +14,15 @@ export default function AdminPanel() {
 
         setLoading(true);
         try {
-            const { data } = await axios.post('https://payment-link-server.vercel.app/api/generate-link', {
+            console.log('Gerando link para:', redirectUrl);
+            // const apiUrl = process.env.REACT_APP_API_URL;
+            const { data } = await axios.post(`http://localhost:3001/api/generate-link`, {
                 redirectUrl
             });
-            const fullLink = `${window.location.origin}/pagamento/${data.link.split('/').pop()}`;
+
+            console.log('data', data);
+
+            const fullLink = `${window.location.origin}/pagamento/${data.id.split('/').pop()}`;
             setLinks([...links, { url: fullLink, redirectUrl }]);
         } catch (error) {
             console.error('Erro ao gerar link:', error);
@@ -55,8 +60,8 @@ export default function AdminPanel() {
                             disabled={loading || !redirectUrl}
                             style={{
                                 ...buttonStyle,
-                                backgroundColor: loading ? '#ccc' : '#0063F7',
-                                cursor: loading ? 'not-allowed' : 'pointer',
+                                backgroundColor: !redirectUrl ? '#ccc' : '#0063F7',
+                                cursor: !redirectUrl ? 'not-allowed' : 'pointer',
                             }}
                         >
                             {loading ? 'Gerando...' : 'Gerar Link Único'}

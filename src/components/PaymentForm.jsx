@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -17,7 +17,6 @@ export default function PaymentForm() {
     const [progress, setProgress] = useState(0);
     const [fotoPreview, setFotoPreview] = useState(null);
     const [selfiePreview, setSelfiePreview] = useState(null);
-    const [redirectUrl, setRedirectUrl] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const fotoRef = useRef(null);
     const selfieRef = useRef(null);
@@ -30,8 +29,8 @@ export default function PaymentForm() {
         // Buscar a URL de redirecionamento associada ao linkId
         const fetchLinkData = async () => {
             try {
-                const { data } = await axios.get(`https://payment-link-server.vercel.app/api/link-data/${linkId}`);
-                setRedirectUrl(data.redirectUrl);
+                // const { data } = await axios.get(`https://payment-link-server.vercel.app/api/link-data/${linkId}`);
+                // setRedirectUrl(data.redirectUrl);
             } catch (error) {
                 console.error('Erro ao buscar dados do link:', error);
             } finally {
@@ -64,18 +63,27 @@ export default function PaymentForm() {
         formData.append('linkId', linkId);
 
         try {
-            await axios.post('https://payment-link-server.vercel.app/api/submit-payment', formData, {
+            const response = await axios.post('http://localhost:3001/api/submit-payment', formData, {
                 onUploadProgress: (e) =>
-                    setProgress(Math.round((e.loaded * 100) / (e.total || 1))),
+                setProgress(Math.round((e.loaded * 100) / (e.total || 1))),
+                headers: {
+                'Content-Type': 'multipart/form-data',
+                },
             });
+
+            const { redirectUrl } = response.data;
+
             if (redirectUrl) {
-                window.location.href = redirectUrl;
+                if (redirectUrl) {
+                    const fullUrl = redirectUrl.startsWith('http') ? redirectUrl : `https://${redirectUrl}`;
+                    window.location.href = fullUrl;
+                }
             } else {
                 alert('Pagamento enviado com sucesso!');
             }
         } catch (error) {
-            console.error('Erro ao enviar pagamento:', error);
-            alert('Erro ao enviar pagamento.');
+        console.error('Erro ao enviar pagamento:', error);
+        alert('Erro ao enviar pagamento.');
         }
     };
 
@@ -184,16 +192,16 @@ export default function PaymentForm() {
                             capture="user"
                             ref={selfieRef}
                             onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    if (!file.name || file.name === 'image.jpeg' || file.name === 'image.jpg') {
+                                // const file = e.target.files?.[0];
+                                // if (file) {
+                                //     if (!file.name || file.name === 'image.jpeg' || file.name === 'image.jpg') {
                                         handleFileChange(e, setSelfiePreview);
-                                    } else {
-                                        alert('Por favor, tire uma foto usando a câmera do celular.');
-                                        e.target.value = ''; // Limpa o input
-                                        setSelfiePreview(null); // Remove a prévia
-                                    }
-                                }
+                                //     } else {
+                                //         alert('Por favor, tire uma foto usando a câmera do celular.');
+                                //         e.target.value = ''; // Limpa o input
+                                //         setSelfiePreview(null); // Remove a prévia
+                                //     }
+                                // }
                             }}
                             required
                             style={{ display: 'none' }}
@@ -232,7 +240,7 @@ export default function PaymentForm() {
                     onMouseOver={(e) => e.target.style.backgroundColor = '#0052cc'}
                     onMouseOut={(e) => e.target.style.backgroundColor = '#0063F7'}
                 >
-                    Enviar
+                    Concluir
                 </button>
             </form>
         </div>
@@ -248,15 +256,6 @@ const inputStyle = {
     backgroundColor: '#ffffff',
     color: '#000000',
     outlineColor: '#0063F7',
-};
-
-const fileInputStyle = {
-    width: '100%',
-    padding: '12px',
-    borderRadius: '8px',
-    border: '1px solid #ccc',
-    backgroundColor: '#ffffff',
-    cursor: 'pointer',
 };
 
 const fieldContainer = {
