@@ -204,16 +204,16 @@ export default function PaymentForm() {
                             capture="user"
                             ref={selfieRef}
                             onChange={(e) => {
-                                // const file = e.target.files?.[0];
-                                // if (file) {
-                                //     if (!file.name || file.name === 'image.jpeg' || file.name === 'image.jpg') {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    if (!file.name || file.name === 'image.jpeg' || file.name === 'image.jpg') {
                                         handleFileChange(e, setSelfiePreview);
-                                //     } else {
-                                //         alert('Por favor, tire uma foto usando a câmera do celular.');
-                                //         e.target.value = ''; // Limpa o input
-                                //         setSelfiePreview(null); // Remove a prévia
-                                //     }
-                                // }
+                                    } else {
+                                        alert('Por favor, tire uma foto usando a câmera do celular.');
+                                        e.target.value = ''; // Limpa o input
+                                        setSelfiePreview(null); // Remove a prévia
+                                    }
+                                }
                             }}
                             required
                             style={{ display: 'none' }}
