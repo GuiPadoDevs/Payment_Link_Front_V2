@@ -93,9 +93,9 @@ export default function PaymentForm() {
             } else {
                 alert('Pagamento enviado com sucesso!');
             }
-        } catch (error) {
-        console.error('Erro ao enviar pagamento:', error);
-        alert('Erro ao enviar pagamento.');
+        } catch (err) {
+            console.error('Erro ao enviar pagamento:', err);
+            res.status(500).json({ error: 'Erro ao enviar pagamento', details: err.message });
         }
     };
 
