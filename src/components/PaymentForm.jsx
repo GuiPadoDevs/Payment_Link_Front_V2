@@ -6,7 +6,7 @@ import axios from 'axios';
 import { IMaskInput } from 'react-imask';
 import { useParams } from 'react-router-dom';
 import WebcamCapture from './WebcamCaptura.jsx';
-import PrivacyPolicyModal from './PrivacyPolicyModal.jsx';
+import PrivacyPolicyOverlay from './PrivacyPolicyOverlay.jsx';
 
 const schema = z.object({
     nome: z.string().min(3, 'Nome muito curto'),
