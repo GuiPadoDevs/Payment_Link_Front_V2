@@ -57,12 +57,13 @@ const styles = {
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         borderTop: '1px solid #ccc',
         zIndex: 9999,
-        display: 'flex',
-        justifyContent: 'center',
+        // display: 'flex',
+        // justifyContent: 'center',
     },
     banner: {
-        maxWidth: '900px',
         width: '100%',
+        maxWidth: '900px',
+        boxSizing: 'border-box',
         paddingTop: '1rem',
         paddingBottom: '1rem',
         paddingLeft: 'calc(1rem + env(safe-area-inset-left))',
@@ -71,6 +72,7 @@ const styles = {
         flexDirection: 'column',
         gap: '0.75rem',
         fontSize: '14px',
+        margin: '0 auto', // centraliza horizontalmente no máximo de 900px
     },
     message: {
         margin: 0,
