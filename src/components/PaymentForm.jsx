@@ -84,18 +84,19 @@ export default function PaymentForm() {
             });
 
             const { redirectUrl } = response.data;
+            console.log('Dados da resposta:', response.data);
 
             if (redirectUrl) {
                 if (redirectUrl) {
                     const fullUrl = redirectUrl.startsWith('http') ? redirectUrl : `https://${redirectUrl}`;
-                    window.location.href = fullUrl;
+                    window.location.assign(fullUrl);
                 }
             } else {
                 alert('Pagamento enviado com sucesso!');
             }
         } catch (err) {
             console.error('Erro ao enviar pagamento:', err);
-            res.status(500).json({ error: 'Erro ao enviar pagamento', details: err.message });
+            alert('Erro ao enviar pagamento. Tente novamente.');
         }
     };
 
