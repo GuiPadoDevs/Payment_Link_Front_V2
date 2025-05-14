@@ -1,0 +1,101 @@
+import React, { useState, useEffect } from 'react';
+
+const PrivacyPolicyNotice = ({ onAccept }) => {
+    const [expanded, setExpanded] = useState(false);
+
+    // Impede scroll na página até aceitar
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
+
+    const handleAccept = () => {
+        document.body.style.overflow = 'auto';
+        onAccept();
+    };
+
+    return (
+        <div style={styles.overlay}>
+            <div style={styles.banner}>
+                <p style={styles.message}>
+                    Utilizamos seus dados para processar o pagamento com segurança.
+                    {!expanded && (
+                        <>
+                            {' '}
+                            <button style={styles.linkButton} onClick={() => setExpanded(true)}>
+                                Saber mais
+                            </button>
+                        </>
+                    )}
+                </p>
+
+                {expanded && (
+                    <div style={styles.expandedText}>
+                        <p>
+                            Seus dados serão utilizados exclusivamente para processar o pagamento e verificar sua identidade
+                            de forma segura. As informações são armazenadas temporariamente e não serão compartilhadas com
+                            terceiros sem sua autorização. Para mais detalhes, consulte os termos completos da nossa política.
+                        </p>
+                    </div>
+                )}
+
+                <button style={styles.acceptButton} onClick={handleAccept}>
+                    Aceito
+                </button>
+            </div>
+        </div>
+    );
+};
+
+const styles = {
+    overlay: {
+        position: 'fixed',
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        borderTop: '1px solid #ccc',
+        zIndex: 9999,
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    banner: {
+        maxWidth: '900px',
+        width: '100%',
+        padding: '1rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.75rem',
+        fontSize: '14px',
+    },
+    message: {
+        margin: 0,
+    },
+    linkButton: {
+        background: 'none',
+        border: 'none',
+        color: '#007bff',
+        cursor: 'pointer',
+        textDecoration: 'underline',
+        fontSize: '14px',
+        padding: 0,
+    },
+    expandedText: {
+        backgroundColor: '#f8f8f8',
+        padding: '0.5rem',
+        borderRadius: '4px',
+        fontSize: '13px',
+    },
+    acceptButton: {
+        alignSelf: 'flex-end',
+        backgroundColor: '#28a745',
+        color: 'white',
+        border: 'none',
+        padding: '0.5rem 1rem',
+        borderRadius: '4px',
+        cursor: 'pointer',
+    },
+};
+
+export default PrivacyPolicyNotice;

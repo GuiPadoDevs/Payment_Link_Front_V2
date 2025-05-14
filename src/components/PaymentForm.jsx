@@ -5,8 +5,9 @@ import { z } from 'zod';
 import axios from 'axios';
 import { IMaskInput } from 'react-imask';
 import { useParams } from 'react-router-dom';
+
 import WebcamCapture from './WebcamCaptura.jsx';
-import PrivacyPolicyOverlay from './PrivacyPolicyOverlay.jsx';
+import PrivacyPolicyOverlay from './PrivacyPolicyNotice.jsx';
 
 const schema = z.object({
     nome: z.string().min(3, 'Nome muito curto'),
@@ -136,7 +137,7 @@ export default function PaymentForm() {
             padding: '20px',
             position: 'relative'
         }}>
-            {!accepted && <PrivacyPolicyOverlay onAccept={() => setAccepted(true)} />}
+            {!accepted && <PrivacyPolicyNotice onAccept={() => setAccepted(true)} />}
 
             <div style={{ filter: !accepted ? 'blur(2px)' : 'none' }}>
                 <form
