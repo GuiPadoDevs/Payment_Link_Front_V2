@@ -7,8 +7,17 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
     const [preview, setPreview] = useState(null);
     const [videoReady, setVideoReady] = useState(false);
     const [shouldStart, setShouldStart] = useState(false);
+    const [isMobile, setIsMobile] = useState(true);
 
-    // Efeito que roda quando <video> estiver montado no DOM
+    useEffect(() => {
+        const checkDevice = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        checkDevice();
+        window.addEventListener("resize", checkDevice);
+        return () => window.removeEventListener("resize", checkDevice);
+    }, []);
+
     useEffect(() => {
         if (shouldStart && videoRef.current) {
             const start = async () => {
@@ -17,25 +26,20 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
                     const video = videoRef.current;
                     video.srcObject = stream;
                     video.play();
-
-                    video.addEventListener('canplay', () => {
-                        setVideoReady(true);
-                    }, { once: true });
-
+                    video.addEventListener('canplay', () => setVideoReady(true), { once: true });
                     setStreaming(true);
                 } catch (err) {
                     alert("Erro ao acessar câmera: " + err.message);
-                    setShouldStart(false); // cancela tentativa
+                    setShouldStart(false);
                 }
             };
-
             start();
         }
     }, [shouldStart]);
 
     const captureImage = () => {
         if (!videoReady) {
-            alert("Aguardando a câmera carregar. Tente novamente em 1 segundo.");
+            alert("Aguardando a câmera carregar. Tente novamente.");
             return;
         }
 
@@ -45,7 +49,6 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
         setPreview(dataUrl);
         onCapture(dataUrl);
 
-        // Encerrar a câmera após captura
         const tracks = videoRef.current.srcObject.getTracks();
         tracks.forEach(track => track.stop());
         setStreaming(false);
@@ -61,7 +64,7 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
                     onClick={() => setShouldStart(true)}
                     style={{
                         ...uploadButtonStyle,
-                        marginBottom: '10px'
+                        width: isMobile ? 'auto' : '200px'
                     }}
                 >
                     {label}
@@ -69,27 +72,30 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
             )}
 
             {(shouldStart || streaming) && (
-                <>
+                <div style={isMobile ? {} : containerDesktopStyle}>
+                    {!isMobile && <span style={cameraStatusStyle}>🟢 Câmera Ativa</span>}
+
                     <video
                         ref={videoRef}
-                        width="300"
-                        height="225"
-                        style={{ borderRadius: '8px' }}
+                        width={isMobile ? "300" : "480"}
+                        height={isMobile ? "225" : "360"}
+                        style={isMobile ? mobileVideoStyle : desktopVideoStyle}
                         autoPlay
                         muted
                     />
-                    <br />
+
                     <button
                         type="button"
                         onClick={captureImage}
                         style={{
                             ...uploadButtonStyle,
-                            marginTop: '10px'
+                            marginTop: '10px',
+                            width: isMobile ? 'auto' : '200px'
                         }}
                     >
                         Tirar Foto
                     </button>
-                </>
+                </div>
             )}
 
             <canvas ref={canvasRef} width="300" height="225" style={{ display: 'none' }} />
@@ -108,6 +114,7 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
     );
 }
 
+// Estilos comuns
 const uploadButtonStyle = {
     display: 'inline-block',
     padding: '10px 20px',
@@ -126,7 +133,40 @@ const uploadButtonStyle = {
 const imagePreviewStyle = {
     width: '100%',
     maxWidth: '300px',
-    marginTop: '10px',
     borderRadius: '8px',
     objectFit: 'cover'
+};
+
+// Estilos específicos para desktop
+const containerDesktopStyle = {
+    marginTop: '20px',
+    backgroundColor: '#0f172a',
+    padding: '20px',
+    borderRadius: '12px',
+    boxShadow: '0 0 12px rgba(0, 99, 247, 0.5)',
+    textAlign: 'center',
+    position: 'relative',
+    maxWidth: '520px',
+    margin: '20px auto',
+};
+
+const desktopVideoStyle = {
+    borderRadius: '12px',
+    boxShadow: '0 0 8px rgba(0, 99, 247, 0.4)',
+    border: '2px solid #0063F7',
+};
+
+// Estilos para mobile
+const mobileVideoStyle = {
+    borderRadius: '8px',
+};
+
+// Indicador de status da câmera
+const cameraStatusStyle = {
+    position: 'absolute',
+    top: '-15px',
+    right: '20px',
+    color: '#00ff88',
+    fontSize: '14px',
+    fontWeight: 'bold',
 };
