@@ -20,7 +20,7 @@ const PrivacyPolicyNotice = ({ onAccept }) => {
         <div style={styles.overlay}>
             <div style={styles.banner}>
                 <p style={styles.message}>
-                    Utilizamos seus dados para processar o pagamento com segurança.
+                    Utilizamos cookies para melhorar sua experiência em nosso site e direcionar conteúdos relevantes para você. Ao continuar, você concorda e aceita nossa Política de Privacidade. Se preferir, informe quais cookies você permite utilizarmos clicando aqui.
                     {!expanded && (
                         <>
                             {' '}
@@ -63,7 +63,10 @@ const styles = {
     banner: {
         maxWidth: '900px',
         width: '100%',
-        padding: '1rem',
+        paddingTop: '1rem',
+        paddingBottom: '1rem',
+        paddingLeft: 'calc(1rem + env(safe-area-inset-left))',
+        paddingRight: 'calc(1rem + env(safe-area-inset-right))',
         display: 'flex',
         flexDirection: 'column',
         gap: '0.75rem',
