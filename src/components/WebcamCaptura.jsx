@@ -73,23 +73,29 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
 
             {(shouldStart || streaming) && (
                 <div style={isMobile ? {} : containerDesktopStyle}>
-                    {!isMobile && <span style={cameraStatusStyle}>🟢 Câmera Ativa</span>}
+                    {!isMobile && (
+                        <div style={cameraStatusStyle}>
+                            🟢 Câmera Ativa
+                        </div>
+                    )}
 
-                    <video
-                        ref={videoRef}
-                        width={isMobile ? "300" : "480"}
-                        height={isMobile ? "225" : "360"}
-                        style={isMobile ? mobileVideoStyle : desktopVideoStyle}
-                        autoPlay
-                        muted
-                    />
+                    <div style={videoWrapperStyle}>
+                        <video
+                            ref={videoRef}
+                            width="100%"
+                            height="100%"
+                            style={desktopVideoStyle}
+                            autoPlay
+                            muted
+                        />
+                    </div>
 
                     <button
                         type="button"
                         onClick={captureImage}
                         style={{
                             ...uploadButtonStyle,
-                            marginTop: '10px',
+                            marginTop: '12px',
                             width: isMobile ? 'auto' : '200px'
                         }}
                     >
@@ -114,7 +120,7 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
     );
 }
 
-// Estilos comuns
+// Botão de upload
 const uploadButtonStyle = {
     display: 'inline-block',
     padding: '10px 20px',
@@ -130,6 +136,7 @@ const uploadButtonStyle = {
     outline: 'none',
 };
 
+// Prévia da imagem capturada
 const imagePreviewStyle = {
     width: '100%',
     maxWidth: '300px',
@@ -137,36 +144,47 @@ const imagePreviewStyle = {
     objectFit: 'cover'
 };
 
-// Estilos específicos para desktop
+// Container para desktop com fundo escuro
 const containerDesktopStyle = {
     marginTop: '20px',
     backgroundColor: '#0f172a',
-    padding: '20px',
-    borderRadius: '12px',
-    boxShadow: '0 0 12px rgba(0, 99, 247, 0.5)',
+    padding: '24px 16px',
+    borderRadius: '16px',
+    boxShadow: '0 0 12px rgba(0, 99, 247, 0.4)',
     textAlign: 'center',
-    position: 'relative',
     maxWidth: '520px',
-    margin: '20px auto',
+    marginInline: 'auto',
+    position: 'relative'
 };
 
-const desktopVideoStyle = {
-    borderRadius: '12px',
-    boxShadow: '0 0 8px rgba(0, 99, 247, 0.4)',
+// Moldura do vídeo com centralização
+const videoWrapperStyle = {
+    width: '100%',
+    maxWidth: '480px',
+    aspectRatio: '4 / 3',
     border: '2px solid #0063F7',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    marginInline: 'auto',
 };
 
-// Estilos para mobile
-const mobileVideoStyle = {
-    borderRadius: '8px',
+// Estilo do <video> preenchendo 100% do wrapper
+const desktopVideoStyle = {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
 };
 
-// Indicador de status da câmera
+// Indicador de status da câmera no canto superior esquerdo do fundo azul
 const cameraStatusStyle = {
     position: 'absolute',
-    top: '-15px',
-    right: '20px',
+    top: '10px',
+    left: '16px',
+    backgroundColor: '#0f172a',
     color: '#00ff88',
     fontSize: '14px',
     fontWeight: 'bold',
+    padding: '4px 8px',
+    borderRadius: '8px',
+    zIndex: 10,
 };
