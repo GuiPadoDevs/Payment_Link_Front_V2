@@ -120,6 +120,10 @@ export default function PaymentForm() {
         </div>;
     }
 
+    function isMobileDevice() {
+        return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+
     return (
         <div style={{
             minHeight: '100vh',
@@ -211,46 +215,44 @@ export default function PaymentForm() {
 
                 <div style={fieldContainer}>
                     <label style={labelStyle}>Selfie com Documento</label>
-                    <WebcamCapture
-                        label="Tirar Selfie"
-                        onCapture={(dataUrl) => {
-                            setSelfieBase64(dataUrl);
-                        }}
-                    />
+                    {isMobileDevice() ? (
+                        <>
+                            <label style={uploadButtonStyle}>
+                                Tirar Selfie
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    capture="user"
+                                    ref={selfieRef}
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            reader.onloadend = () => {
+                                                setSelfieBase64(reader.result);
+                                                setSelfiePreview(reader.result);
+                                            };
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }}
+                                    required
+                                    style={{ display: 'none' }}
+                                />
+                            </label>
+                            {selfiePreview && (
+                                <img src={selfiePreview} alt="Selfie" style={imagePreviewStyle} />
+                            )}
+                        </>
+                    ) : (
+                        <WebcamCapture
+                            label="Tirar Selfie"
+                            onCapture={(dataUrl) => {
+                                setSelfieBase64(dataUrl);
+                                setSelfiePreview(dataUrl);
+                            }}
+                        />
+                    )}
                 </div>
-
-                {/*<div style={fieldContainer}>*/}
-                {/*    <label style={labelStyle}>Selfie com Documento</label>*/}
-                {/*    <label style={uploadButtonStyle}>*/}
-                {/*        Tirar Selfie*/}
-                {/*        <input*/}
-                {/*            type="file"*/}
-                {/*            accept="image/*"*/}
-                {/*            capture="user"*/}
-                {/*            ref={selfieRef}*/}
-                {/*            onChange={(e) => {*/}
-                {/*                const file = e.target.files?.[0];*/}
-                {/*                if (file) {*/}
-                {/*                    if (!file.name || file.name === 'image.jpeg' || file.name === 'image.jpg') {*/}
-                {/*                        handleFileChange(e, setSelfiePreview);*/}
-                {/*                    } else {*/}
-                {/*                        alert('Por favor, tire uma foto usando a câmera do celular.');*/}
-                {/*                        e.target.value = ''; // Limpa o input*/}
-                {/*                        setSelfiePreview(null); // Remove a prévia*/}
-                {/*                    }*/}
-                {/*                }*/}
-                {/*            }}*/}
-                {/*            required*/}
-                {/*            style={{ display: 'none' }}*/}
-                {/*            onClick={(e) => {*/}
-                {/*                e.target.value = '';*/}
-                {/*            }}*/}
-                {/*        />*/}
-                {/*    </label>*/}
-                {/*    {selfiePreview && (*/}
-                {/*        <img src={selfiePreview} alt="Selfie" style={imagePreviewStyle} />*/}
-                {/*    )}*/}
-                {/*</div>*/}
 
                 {progress > 0 && (
                     <progress
