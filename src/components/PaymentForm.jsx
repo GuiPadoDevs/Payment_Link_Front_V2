@@ -75,6 +75,7 @@ export default function PaymentForm() {
             // });
 
             alert('Vai pro back');
+            alert('formData: ' + formData);
             // -> URL Producao
             const response = await axios.post('https://payment-link-server-v2.vercel.app/api/submit-payment', formData, {
                 onUploadProgress: (e) =>
