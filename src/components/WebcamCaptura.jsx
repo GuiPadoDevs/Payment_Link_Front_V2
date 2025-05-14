@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) {
     const videoRef = useRef(null);
@@ -6,24 +6,32 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
     const [streaming, setStreaming] = useState(false);
     const [preview, setPreview] = useState(null);
     const [videoReady, setVideoReady] = useState(false);
+    const [shouldStart, setShouldStart] = useState(false);
 
-    const startCamera = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            const video = videoRef.current;
-            video.srcObject = stream;
-            video.play();
+    // Efeito que roda quando <video> estiver montado no DOM
+    useEffect(() => {
+        if (shouldStart && videoRef.current) {
+            const start = async () => {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    const video = videoRef.current;
+                    video.srcObject = stream;
+                    video.play();
 
-            // Aguarda até que o vídeo esteja pronto para desenhar
-            video.addEventListener('canplay', () => {
-                setVideoReady(true);
-            }, { once: true });
+                    video.addEventListener('canplay', () => {
+                        setVideoReady(true);
+                    }, { once: true });
 
-            setStreaming(true);
-        } catch (err) {
-            alert("Erro ao acessar câmera: " + err.message);
+                    setStreaming(true);
+                } catch (err) {
+                    alert("Erro ao acessar câmera: " + err.message);
+                    setShouldStart(false); // cancela tentativa
+                }
+            };
+
+            start();
         }
-    };
+    }, [shouldStart]);
 
     const captureImage = () => {
         if (!videoReady) {
@@ -42,14 +50,15 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
         tracks.forEach(track => track.stop());
         setStreaming(false);
         setVideoReady(false);
+        setShouldStart(false);
     };
 
     return (
         <div style={{ marginTop: '10px' }}>
-            {!streaming ? (
+            {!streaming && (
                 <button
                     type="button"
-                    onClick={startCamera}
+                    onClick={() => setShouldStart(true)}
                     style={{
                         ...uploadButtonStyle,
                         marginBottom: '10px'
@@ -57,9 +66,18 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
                 >
                     {label}
                 </button>
-            ) : (
+            )}
+
+            {(shouldStart || streaming) && (
                 <>
-                    <video ref={videoRef} width="300" height="225" style={{ borderRadius: '8px' }} />
+                    <video
+                        ref={videoRef}
+                        width="300"
+                        height="225"
+                        style={{ borderRadius: '8px' }}
+                        autoPlay
+                        muted
+                    />
                     <br />
                     <button
                         type="button"
@@ -90,7 +108,6 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
     );
 }
 
-// Reaproveitando os estilos do seu código original
 const uploadButtonStyle = {
     display: 'inline-block',
     padding: '10px 20px',
