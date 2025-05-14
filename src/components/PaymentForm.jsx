@@ -26,20 +26,18 @@ export default function PaymentForm() {
     });
 
     useEffect(() => {
-        // Buscar a URL de redirecionamento associada ao linkId
-        const fetchLinkData = async () => {
+        const pingBackend = async () => {
             try {
-                // const { data } = await axios.get(`https://payment-link-server.vercel.app/api/link-data/${linkId}`);
-                // setRedirectUrl(data.redirectUrl);
-            } catch (error) {
-                console.error('Erro ao buscar dados do link:', error);
-            } finally {
-                setIsLoading(false);
+                await axios.get('https://payment-link-server-v2.vercel.app/api/ping');
+                console.log('Servidor acordado');
+            } catch (err) {
+                console.warn('Falha ao acordar servidor:', err);
             }
         };
 
-        fetchLinkData();
-    }, [linkId]);
+        pingBackend();
+    }, []);
+
 
     const handleFileChange = (e, setPreview) => {
         const file = e.target.files?.[0];
