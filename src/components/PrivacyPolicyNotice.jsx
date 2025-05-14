@@ -62,7 +62,7 @@ const styles = {
     banner: {
         width: '100%',
         maxWidth: '900px',
-        padding: '1rem 24px',
+        padding: '1rem 34px',
         boxSizing: 'border-box',
         overflowWrap: 'break-word',
         paddingTop: '1rem',
