@@ -135,7 +135,8 @@ export default function PaymentForm() {
             justifyContent: 'center',
             alignItems: 'center',
             padding: '20px',
-            position: 'relative'
+            position: 'relative',
+            overflowX: 'hidden',
         }}>
             {!accepted && <PrivacyPolicyNotice onAccept={() => setAccepted(true)} />}
 
@@ -153,6 +154,7 @@ export default function PaymentForm() {
                         flexDirection: 'column',
                         gap: '16px',
                         fontFamily: 'Arial, sans-serif',
+                        boxSizing: 'border-box',
                     }}
                 >
                     <h1 style={{
