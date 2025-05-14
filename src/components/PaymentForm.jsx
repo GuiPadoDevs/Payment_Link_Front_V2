@@ -43,11 +43,6 @@ export default function PaymentForm() {
         pingBackend();
     }, []);
 
-    if (!accepted) {
-        return <PrivacyPolicyModal onAccept={() => setAccepted(true)} />;
-    }
-
-
     const handleFileChange = (e, setPreview) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -139,155 +134,160 @@ export default function PaymentForm() {
             justifyContent: 'center',
             alignItems: 'center',
             padding: '20px',
+            position: 'relative'
         }}>
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                style={{
-                    width: '100%',
-                    maxWidth: '480px',
-                    padding: '30px',
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '16px',
-                    fontFamily: 'Arial, sans-serif',
-                }}
-            >
-                <h1 style={{
-                    color: '#0063F7',
-                    textAlign: 'center',
-                    marginBottom: '20px',
-                    fontSize: '24px',
-                }}>
-                    Finalizar Pagamento
-                </h1>
+            {!accepted && <PrivacyPolicyOverlay onAccept={() => setAccepted(true)} />}
 
-                <div style={fieldContainer}>
-                    <label style={labelStyle}>Nome Completo</label>
-                    <input
-                        {...register('nome')}
-                        style={inputStyle}
-                    />
-                    {errors.nome && <span style={errorStyle}>{errors.nome.message}</span>}
-                </div>
+            <div style={{ filter: !accepted ? 'blur(2px)' : 'none' }}>
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    style={{
+                        width: '100%',
+                        maxWidth: '480px',
+                        padding: '30px',
+                        background: '#ffffff',
+                        borderRadius: '12px',
+                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '16px',
+                        fontFamily: 'Arial, sans-serif',
+                    }}
+                >
+                    <h1 style={{
+                        color: '#0063F7',
+                        textAlign: 'center',
+                        marginBottom: '20px',
+                        fontSize: '24px',
+                    }}>
+                        Finalizar Pagamento
+                    </h1>
 
-                <div style={fieldContainer}>
-                    <label style={labelStyle}>E-mail</label>
-                    <input
-                        type="email"
-                        {...register('email')}
-                        style={inputStyle}
-                    />
-                    {errors.email && <span style={errorStyle}>{errors.email.message}</span>}
-                </div>
+                    <div style={fieldContainer}>
+                        <label style={labelStyle}>Nome Completo</label>
+                        <input
+                            {...register('nome')}
+                            style={inputStyle}
+                        />
+                        {errors.nome && <span style={errorStyle}>{errors.nome.message}</span>}
+                    </div>
 
-                <div style={fieldContainer}>
-                    <label style={labelStyle}>Telefone</label>
-                    <Controller
-                        name="telefone"
-                        control={control}
-                        render={({ field }) => (
-                            <IMaskInput
-                                {...field}
-                                mask="(00) 00000-0000"
-                                placeholder="(00) 00000-0000"
-                                style={inputStyle}
+                    <div style={fieldContainer}>
+                        <label style={labelStyle}>E-mail</label>
+                        <input
+                            type="email"
+                            {...register('email')}
+                            style={inputStyle}
+                        />
+                        {errors.email && <span style={errorStyle}>{errors.email.message}</span>}
+                    </div>
+
+                    <div style={fieldContainer}>
+                        <label style={labelStyle}>Telefone</label>
+                        <Controller
+                            name="telefone"
+                            control={control}
+                            render={({ field }) => (
+                                <IMaskInput
+                                    {...field}
+                                    mask="(00) 00000-0000"
+                                    placeholder="(00) 00000-0000"
+                                    style={inputStyle}
+                                />
+                            )}
+                        />
+                        {errors.telefone && <span style={errorStyle}>{errors.telefone.message}</span>}
+                    </div>
+
+                    <div style={fieldContainer}>
+                        <label style={labelStyle}>Foto do Documento</label>
+                        <label style={uploadButtonStyle}>
+                            Selecionar Foto
+                            <input
+                                type="file"
+                                accept="image/*"
+                                capture="environment"
+                                ref={fotoRef}
+                                onChange={(e) => handleFileChange(e, setFotoPreview)}
+                                required
+                                style={{ display: 'none' }}
+                            />
+                        </label>
+                        {fotoPreview && (
+                            <img src={fotoPreview} alt="Documento" style={imagePreviewStyle} />
+                        )}
+                    </div>
+
+                    <div style={fieldContainer}>
+                        <label style={labelStyle}>Selfie com Documento</label>
+                        {isMobileDevice() ? (
+                            <>
+                                <label style={uploadButtonStyle}>
+                                    Tirar Selfie
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        capture="user"
+                                        ref={selfieRef}
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file) {
+                                                const reader = new FileReader();
+                                                reader.onloadend = () => {
+                                                    setSelfieBase64(reader.result);
+                                                    setSelfiePreview(reader.result);
+                                                };
+                                                reader.readAsDataURL(file);
+                                            }
+                                        }}
+                                        required
+                                        style={{ display: 'none' }}
+                                    />
+                                </label>
+                                {selfiePreview && (
+                                    <img src={selfiePreview} alt="Selfie" style={imagePreviewStyle} />
+                                )}
+                            </>
+                        ) : (
+                            <WebcamCapture
+                                label="Tirar Selfie"
+                                onCapture={(dataUrl) => {
+                                    setSelfieBase64(dataUrl);
+                                    setSelfiePreview(dataUrl);
+                                }}
                             />
                         )}
-                    />
-                    {errors.telefone && <span style={errorStyle}>{errors.telefone.message}</span>}
-                </div>
+                    </div>
 
-                <div style={fieldContainer}>
-                    <label style={labelStyle}>Foto do Documento</label>
-                    <label style={uploadButtonStyle}>
-                        Selecionar Foto
-                        <input
-                            type="file"
-                            accept="image/*"
-                            capture="environment"
-                            ref={fotoRef}
-                            onChange={(e) => handleFileChange(e, setFotoPreview)}
-                            required
-                            style={{ display: 'none' }}
-                        />
-                    </label>
-                    {fotoPreview && (
-                        <img src={fotoPreview} alt="Documento" style={imagePreviewStyle} />
-                    )}
-                </div>
-
-                <div style={fieldContainer}>
-                    <label style={labelStyle}>Selfie com Documento</label>
-                    {isMobileDevice() ? (
-                        <>
-                            <label style={uploadButtonStyle}>
-                                Tirar Selfie
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    capture="user"
-                                    ref={selfieRef}
-                                    onChange={(e) => {
-                                        const file = e.target.files?.[0];
-                                        if (file) {
-                                            const reader = new FileReader();
-                                            reader.onloadend = () => {
-                                                setSelfieBase64(reader.result);
-                                                setSelfiePreview(reader.result);
-                                            };
-                                            reader.readAsDataURL(file);
-                                        }
-                                    }}
-                                    required
-                                    style={{ display: 'none' }}
-                                />
-                            </label>
-                            {selfiePreview && (
-                                <img src={selfiePreview} alt="Selfie" style={imagePreviewStyle} />
-                            )}
-                        </>
-                    ) : (
-                        <WebcamCapture
-                            label="Tirar Selfie"
-                            onCapture={(dataUrl) => {
-                                setSelfieBase64(dataUrl);
-                                setSelfiePreview(dataUrl);
-                            }}
+                    {progress > 0 && (
+                        <progress
+                            value={progress}
+                            max="100"
+                            style={{ width: '100%', height: '20px', marginTop: '10px' }}
                         />
                     )}
-                </div>
 
-                {progress > 0 && (
-                    <progress
-                        value={progress}
-                        max="100"
-                        style={{ width: '100%', height: '20px', marginTop: '10px' }}
-                    />
-                )}
-
-                <button
-                    type="submit"
-                    style={{
-                        marginTop: '20px',
-                        padding: '14px',
-                        backgroundColor: '#0063F7',
-                        color: '#ffffff',
-                        border: 'none',
-                        borderRadius: '8px',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        transition: 'background-color 0.3s',
-                    }}
-                    onMouseOver={(e) => e.target.style.backgroundColor = '#0052cc'}
-                    onMouseOut={(e) => e.target.style.backgroundColor = '#0063F7'}
-                >
-                    Concluir
-                </button>
-            </form>
+                    <button
+                        type="submit"
+                        style={{
+                            marginTop: '20px',
+                            padding: '14px',
+                            backgroundColor: '#0063F7',
+                            color: '#ffffff',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.3s',
+                        }}
+                        onMouseOver={(e) => e.target.style.backgroundColor = '#0052cc'}
+                        onMouseOut={(e) => e.target.style.backgroundColor = '#0063F7'}
+                    >
+                        Concluir
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }
