@@ -52,7 +52,7 @@ export default function PaymentForm() {
     };
 
     const onSubmit = async (data) => {
-        if (!fotoRef.current?.files[0] || !selfieRef.current?.files[0]) {
+        if (!fotoRef.current?.files[0] || !selfieBase64) {
             alert('Por favor, selecione as imagens.');
             return;
         }
