@@ -153,8 +153,7 @@ export default function PaymentForm() {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '16px',
-                        fontFamily: 'Arial, sans-serif',
-                        boxSizing: 'border-box',
+                        fontFamily: 'Arial, sans-serif'
                     }}
                 >
                     <h1 style={{
