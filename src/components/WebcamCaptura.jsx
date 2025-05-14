@@ -120,7 +120,6 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
     );
 }
 
-// Botão de upload
 const uploadButtonStyle = {
     display: 'inline-block',
     padding: '10px 20px',
@@ -136,7 +135,6 @@ const uploadButtonStyle = {
     outline: 'none',
 };
 
-// Prévia da imagem capturada
 const imagePreviewStyle = {
     width: '100%',
     maxWidth: '300px',
@@ -144,7 +142,6 @@ const imagePreviewStyle = {
     objectFit: 'cover'
 };
 
-// Container para desktop com fundo escuro
 const containerDesktopStyle = {
     marginTop: '20px',
     backgroundColor: '#0f172a',
@@ -157,7 +154,6 @@ const containerDesktopStyle = {
     position: 'relative'
 };
 
-// Moldura do vídeo com centralização
 const videoWrapperStyle = {
     width: '100%',
     maxWidth: '480px',
@@ -168,14 +164,12 @@ const videoWrapperStyle = {
     marginInline: 'auto',
 };
 
-// Estilo do <video> preenchendo 100% do wrapper
 const desktopVideoStyle = {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
 };
 
-// Indicador de status da câmera no canto superior esquerdo do fundo azul
 const cameraStatusStyle = {
     position: 'absolute',
     top: '10px',

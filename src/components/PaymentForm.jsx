@@ -6,6 +6,7 @@ import axios from 'axios';
 import { IMaskInput } from 'react-imask';
 import { useParams } from 'react-router-dom';
 import WebcamCapture from './WebcamCaptura.jsx';
+import PrivacyPolicyModal from './PrivacyPolicyModal.jsx';
 
 const schema = z.object({
     nome: z.string().min(3, 'Nome muito curto'),
@@ -22,6 +23,7 @@ export default function PaymentForm() {
     const [selfieBase64, setSelfieBase64] = useState(null);
     const fotoRef = useRef(null);
     const selfieRef = useRef(null);
+    const [accepted, setAccepted] = useState(false);
 
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         resolver: zodResolver(schema)
@@ -40,6 +42,10 @@ export default function PaymentForm() {
 
         pingBackend();
     }, []);
+
+    if (!accepted) {
+        return <PrivacyPolicyModal onAccept={() => setAccepted(true)} />;
+    }
 
 
     const handleFileChange = (e, setPreview) => {
@@ -323,7 +329,6 @@ const imagePreviewStyle = {
     objectFit: 'cover'
 };
 
-// Novo estilo para o botão de upload
 const uploadButtonStyle = {
     display: 'inline-block',
     padding: '10px 20px',
