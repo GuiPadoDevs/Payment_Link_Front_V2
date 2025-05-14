@@ -5,6 +5,7 @@ import { z } from 'zod';
 import axios from 'axios';
 import { IMaskInput } from 'react-imask';
 import { useParams } from 'react-router-dom';
+import WebcamCapture from './WebcamCapture';
 
 const schema = z.object({
     nome: z.string().min(3, 'Nome muito curto'),
@@ -18,6 +19,7 @@ export default function PaymentForm() {
     const [fotoPreview, setFotoPreview] = useState(null);
     const [selfiePreview, setSelfiePreview] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [selfieBase64, setSelfieBase64] = useState(null);
     const fotoRef = useRef(null);
     const selfieRef = useRef(null);
 
@@ -55,10 +57,24 @@ export default function PaymentForm() {
             return;
         }
 
+        function dataURLtoFile(dataUrl, filename) {
+            const arr = dataUrl.split(',');
+            const mime = arr[0].match(/:(.*?);/)[1];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
+            const u8arr = new Uint8Array(n);
+            while (n--) u8arr[n] = bstr.charCodeAt(n);
+            return new File([u8arr], filename, { type: mime });
+        }
+
+
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => formData.append(key, value));
         formData.append('fotoDocumento', fotoRef.current.files[0]);
-        formData.append('selfieDocumento', selfieRef.current.files[0]);
+        if (selfieBase64) {
+            const selfieFile = dataURLtoFile(selfieBase64, 'selfie.png');
+            formData.append('selfieDocumento', selfieFile);
+        }
         formData.append('linkId', linkId);
 
         try {
@@ -195,36 +211,46 @@ export default function PaymentForm() {
 
                 <div style={fieldContainer}>
                     <label style={labelStyle}>Selfie com Documento</label>
-                    <label style={uploadButtonStyle}>
-                        Tirar Selfie
-                        <input
-                            type="file"
-                            accept="image/*"
-                            capture="user"
-                            ref={selfieRef}
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    if (!file.name || file.name === 'image.jpeg' || file.name === 'image.jpg') {
-                                        handleFileChange(e, setSelfiePreview);
-                                    } else {
-                                        alert('Por favor, tire uma foto usando a câmera do celular.');
-                                        e.target.value = ''; // Limpa o input
-                                        setSelfiePreview(null); // Remove a prévia
-                                    }
-                                }
-                            }}
-                            required
-                            style={{ display: 'none' }}
-                            onClick={(e) => {
-                                e.target.value = '';
-                            }}
-                        />
-                    </label>
-                    {selfiePreview && (
-                        <img src={selfiePreview} alt="Selfie" style={imagePreviewStyle} />
-                    )}
+                    <WebcamCapture
+                        label="Tirar Selfie"
+                        onCapture={(dataUrl) => {
+                            setSelfieBase64(dataUrl);
+                        }}
+                    />
                 </div>
+
+                {/*<div style={fieldContainer}>*/}
+                {/*    <label style={labelStyle}>Selfie com Documento</label>*/}
+                {/*    <label style={uploadButtonStyle}>*/}
+                {/*        Tirar Selfie*/}
+                {/*        <input*/}
+                {/*            type="file"*/}
+                {/*            accept="image/*"*/}
+                {/*            capture="user"*/}
+                {/*            ref={selfieRef}*/}
+                {/*            onChange={(e) => {*/}
+                {/*                const file = e.target.files?.[0];*/}
+                {/*                if (file) {*/}
+                {/*                    if (!file.name || file.name === 'image.jpeg' || file.name === 'image.jpg') {*/}
+                {/*                        handleFileChange(e, setSelfiePreview);*/}
+                {/*                    } else {*/}
+                {/*                        alert('Por favor, tire uma foto usando a câmera do celular.');*/}
+                {/*                        e.target.value = ''; // Limpa o input*/}
+                {/*                        setSelfiePreview(null); // Remove a prévia*/}
+                {/*                    }*/}
+                {/*                }*/}
+                {/*            }}*/}
+                {/*            required*/}
+                {/*            style={{ display: 'none' }}*/}
+                {/*            onClick={(e) => {*/}
+                {/*                e.target.value = '';*/}
+                {/*            }}*/}
+                {/*        />*/}
+                {/*    </label>*/}
+                {/*    {selfiePreview && (*/}
+                {/*        <img src={selfiePreview} alt="Selfie" style={imagePreviewStyle} />*/}
+                {/*    )}*/}
+                {/*</div>*/}
 
                 {progress > 0 && (
                     <progress
