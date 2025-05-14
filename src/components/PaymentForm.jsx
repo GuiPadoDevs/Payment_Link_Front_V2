@@ -7,7 +7,7 @@ import { IMaskInput } from 'react-imask';
 import { useParams } from 'react-router-dom';
 
 import WebcamCapture from './WebcamCaptura.jsx';
-import PrivacyPolicyOverlay from './PrivacyPolicyNotice.jsx';
+import PrivacyPolicyNotice from './PrivacyPolicyNotice.jsx';
 
 const schema = z.object({
     nome: z.string().min(3, 'Nome muito curto'),
