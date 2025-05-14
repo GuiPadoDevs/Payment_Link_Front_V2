@@ -74,6 +74,7 @@ export default function PaymentForm() {
             //     },
             // });
 
+            alert('Vai pro back');
             // -> URL Producao
             const response = await axios.post('https://payment-link-server-v2.vercel.app/api/submit-payment', formData, {
                 onUploadProgress: (e) =>
@@ -83,12 +84,16 @@ export default function PaymentForm() {
                 },
             });
 
+            alert('Requisicao deu certo');
             const { redirectUrl } = response.data;
+            alert('RredirectUrl: ' + redirectUrl);
             console.log('Dados da resposta:', response.data);
 
             if (redirectUrl) {
                 if (redirectUrl) {
+                    alert('Antes de fullUrl');
                     const fullUrl = redirectUrl.startsWith('http') ? redirectUrl : `https://${redirectUrl}`;
+                    alert('fullUrl: ' + fullUrl);
                     window.location.assign(fullUrl);
                 }
             } else {
