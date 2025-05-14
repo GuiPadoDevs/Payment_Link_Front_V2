@@ -30,6 +30,7 @@ export default function PaymentForm() {
             try {
                 await axios.get('https://payment-link-server-v2.vercel.app/api/ping');
                 console.log('Servidor acordado');
+                setIsLoading(false);
             } catch (err) {
                 console.warn('Falha ao acordar servidor:', err);
             }
