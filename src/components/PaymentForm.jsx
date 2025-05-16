@@ -202,7 +202,7 @@ export default function PaymentForm() {
                     </div>
 
                     <div style={fieldContainer}>
-                        <label style={labelStyle}>Foto do Documento</label>
+                        <label style={labelStyle}>Documento oficial com foto</label>
                         <label style={uploadButtonStyle}>
                             Selecionar Foto
                             <input
