@@ -128,7 +128,8 @@ export default function PaymentForm() {
 
     return (
         <div style={{
-            minHeight: '100vh',
+            // minHeight: '100vh',
+            height: '100dvh',
             width: '100%',
             backgroundColor: '#ffffff',
             display: 'flex',
