@@ -4,6 +4,17 @@ html, body, #root {
     padding: 0;
 }
 
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+
 /*:root {*/
 /*  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;*/
 /*  line-height: 1.5;*/
