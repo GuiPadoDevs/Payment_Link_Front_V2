@@ -137,6 +137,7 @@ export default function PaymentForm() {
             padding: '20px',
             position: 'relative',
             overflowX: 'hidden',
+            overflow: 'hidden',
         }}>
             {!accepted && <PrivacyPolicyNotice onAccept={() => setAccepted(true)} />}
 
