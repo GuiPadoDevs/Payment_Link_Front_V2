@@ -136,8 +136,8 @@ export default function PaymentForm() {
             justifyContent: 'center',
             alignItems: 'center',
             padding: '20px',
-            // position: 'relative',
-            // overflowX: 'hidden',
+            position: 'relative',
+            overflowX: 'hidden',
             boxSizing: 'border-box',
             overflow: 'hidden',
         }}>
