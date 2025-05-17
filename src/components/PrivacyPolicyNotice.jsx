@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 const PrivacyPolicyNotice = ({ onAccept }) => {
     const [expanded, setExpanded] = useState(false);
 
-    // Impede scroll na página até aceitar
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         return () => {
@@ -57,7 +56,7 @@ const styles = {
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         borderTop: '1px solid #ccc',
         zIndex: 9999,
-        overflowX: 'hidden', //
+        overflowX: 'hidden',
     },
     banner: {
         width: '100%',
@@ -73,7 +72,7 @@ const styles = {
         flexDirection: 'column',
         gap: '0.75rem',
         fontSize: '14px',
-        margin: '0 auto', // centraliza horizontalmente no máximo de 900px
+        margin: '0 auto',
     },
     message: {
         margin: 0,
