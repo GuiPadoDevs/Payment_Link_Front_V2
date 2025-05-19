@@ -64,7 +64,7 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
                     onClick={() => setShouldStart(true)}
                     style={{
                         ...uploadButtonStyle,
-                        width: isMobile ? 'auto' : '200px'
+                        // width: isMobile ? 'auto' : '200px'
                     }}
                 >
                     {label}
@@ -96,7 +96,7 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
                         style={{
                             ...uploadButtonStyle,
                             marginTop: '12px',
-                            width: isMobile ? 'auto' : '200px'
+                            // width: isMobile ? 'auto' : '200px'
                         }}
                     >
                         Tirar Foto
