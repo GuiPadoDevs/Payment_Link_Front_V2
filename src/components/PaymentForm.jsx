@@ -128,22 +128,26 @@ export default function PaymentForm() {
 
     return (
         <div style={{
-            height: '100vh',
-            width: '100vw',
+            minHeight: '100vh',
+            width: '100%',
             backgroundColor: '#ffffff',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             padding: '20px',
             position: 'relative',
-            overflow: 'auto',
+            overflowX: 'hidden',
+            overflowY: 'auto',
+            boxSizing: 'border-box'
         }}>
             {!accepted && <PrivacyPolicyNotice onAccept={() => setAccepted(true)} />}
 
-            <div style={{ width: '100%',
+            <div style={{
+                width: '100%',
                 maxWidth: '480px',
                 margin: '0 auto',
-                filter: !accepted ? 'blur(2px)' : 'none'
+                filter: !accepted ? 'blur(2px)' : 'none',
+                boxSizing: 'border-box',
             }}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
