@@ -9,7 +9,7 @@ export default function App() {
                 <Route path="/" element={<Navigate to="/admin" />} />
                 <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/pagamento/:id" element={
-                    <div style={{ textAlign: 'center', overflow: hidden;}}>
+                    <div style={{ textAlign: 'center', overflow: hidden}}>
                         <PaymentForm />
                     </div>
                 } />
