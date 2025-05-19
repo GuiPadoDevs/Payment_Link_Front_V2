@@ -2,19 +2,20 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function Login({ onLogin }) {
+    console.log('Login')
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://seu-backend.com/api/auth/login', {
+            const response = await axios.post('https://payment-link-server-v2.vercel.app/api/auth/login', {
                 username,
                 password,
             });
             const { token } = response.data;
             localStorage.setItem('token', token);
-            onLogin(); // Atualiza o estado de login no App
+            onLogin();
         } catch (err) {
             alert('Login inválido');
         }
