@@ -140,7 +140,11 @@ export default function PaymentForm() {
         }}>
             {!accepted && <PrivacyPolicyNotice onAccept={() => setAccepted(true)} />}
 
-            <div style={{ filter: !accepted ? 'blur(2px)' : 'none' }}>
+            <div style={{ width: '100%',
+                maxWidth: '480px',
+                margin: '0 auto',
+                filter: !accepted ? 'blur(2px)' : 'none'
+            }}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     style={{
