@@ -133,7 +133,7 @@ export default function PaymentForm() {
             flexDirection: 'column',
             backgroundColor: '#f9f9f9',
             fontFamily: 'Arial, sans-serif',
-            overflow-y: 'hidden',
+            overflowY: 'hidden'
         }}>
             {!accepted && <PrivacyPolicyNotice onAccept={() => setAccepted(true)} />}
 
