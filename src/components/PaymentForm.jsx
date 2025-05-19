@@ -133,14 +133,15 @@ export default function PaymentForm() {
             flexDirection: 'column',
             backgroundColor: '#f9f9f9',
             fontFamily: 'Arial, sans-serif',
-            justifyContent: 'center',
-            alignItems: 'center',
         }}>
             {!accepted && <PrivacyPolicyNotice onAccept={() => setAccepted(true)} />}
 
             <div style={{
+                flex: 1,
+                display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                padding: '20px',
                 filter: !accepted ? 'blur(2px)' : 'none' }}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
