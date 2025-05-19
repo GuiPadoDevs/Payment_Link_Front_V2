@@ -122,6 +122,7 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
 
 const uploadButtonStyle = {
     display: 'inline-block',
+    width: '100%',
     padding: '10px 20px',
     backgroundColor: '#0063F7',
     color: '#ffffff',
