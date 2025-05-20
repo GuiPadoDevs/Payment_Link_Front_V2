@@ -93,6 +93,7 @@ export default function PaymentForm() {
             // });
 
             // -> URL Producao
+            alert('Enviando pagamento...');
             const response = await axios.post('https://payment-link-server-v2.vercel.app/api/submit-payment', formData, {
                 onUploadProgress: (e) =>
                     setProgress(Math.round((e.loaded * 100) / (e.total || 1))),
@@ -101,6 +102,7 @@ export default function PaymentForm() {
                 },
             });
 
+            alert('Pagamento enviado com sucesso!');
             const { redirectUrl } = response.data;
 
             if (redirectUrl) {
