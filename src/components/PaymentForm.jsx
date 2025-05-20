@@ -285,9 +285,18 @@ export default function PaymentForm() {
                             fontWeight: 'bold',
                             cursor: 'pointer',
                             transition: 'background-color 0.3s',
+                            boxShadow: '0 4px 8px rgba(0, 99, 247, 0.4)'
                         }}
-                        onMouseOver={(e) => e.target.style.backgroundColor = '#0052cc'}
-                        onMouseOut={(e) => e.target.style.backgroundColor = '#0063F7'}
+                        onMouseOver={(e) => {
+                            e.target.style.backgroundColor = '#0052cc';
+                            e.target.style.boxShadow = '0 8px 16px rgba(0, 99, 247, 0.6)';
+                            e.target.style.transform = 'translateY(-2px)'; // sobe o botão levemente
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.backgroundColor = '#0063F7';
+                            e.target.style.boxShadow = '0 4px 8px rgba(0, 99, 247, 0.4)';
+                            e.target.style.transform = 'translateY(0)';
+                        }}
                     >
                         Concluir
                     </button>
