@@ -29,7 +29,7 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
                     video.addEventListener('canplay', () => setVideoReady(true), { once: true });
                     setStreaming(true);
                 } catch (err) {
-                    alert("Erro ao acessar câmera: " + err.message);
+                    alert("Não foi possível acessar a câmera. Verifique se a permissão foi concedida ou se o dispositivo possui câmera.");
                     setShouldStart(false);
                 }
             };

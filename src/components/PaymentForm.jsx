@@ -83,11 +83,6 @@ export default function PaymentForm() {
             const selfieFile = dataURLtoFile(selfieBase64, 'selfie.jpg');
             formData.append('selfieDocumento', selfieFile);
         }
-        // formData.append('fotoDocumento', fotoRef.current.files[0]);
-        // if (selfieBase64) {
-        //     const selfieFile = dataURLtoFile(selfieBase64, 'selfie.png');
-        //     formData.append('selfieDocumento', selfieFile);
-        // }
 
         formData.append('linkId', linkId);
 
