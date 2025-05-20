@@ -110,18 +110,6 @@ export default function AdminPanel() {
                                     >
                                         Copiar
                                     </button>
-                                    <button
-                                        onClick={() => {
-                                            setCheckedIndices((prev) =>
-                                                prev.includes(index)
-                                                    ? prev.filter((i) => i !== index)
-                                                    : [...prev, index]
-                                            );
-                                        }}
-                                        style={checkButtonStyle}
-                                    >
-                                        ✅
-                                    </button>
                                 </li>
                             ))}
                         </ul>
@@ -265,14 +253,13 @@ const inputStyle = {
     outlineColor: '#0063F7',
 };
 
-const checkButtonStyle = {
-    padding: '8px 12px',
-    backgroundColor: '#00C853', // verde
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '12px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
-};
+const getListItemStyle = (index) => ({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px 0',
+    borderBottom: '1px solid #ccc',
+    transform: checkedIndices.includes(index) ? 'translateX(10px)' : 'translateX(0)',
+    transition: 'transform 0.3s ease-in-out',
+    opacity: checkedIndices.includes(index) ? 0.7 : 1,
+});
