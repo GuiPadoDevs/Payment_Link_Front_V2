@@ -252,14 +252,3 @@ const inputStyle = {
     color: '#000000',
     outlineColor: '#0063F7',
 };
-
-const getListItemStyle = (index) => ({
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '10px 0',
-    borderBottom: '1px solid #ccc',
-    transform: checkedIndices.includes(index) ? 'translateX(10px)' : 'translateX(0)',
-    transition: 'transform 0.3s ease-in-out',
-    opacity: checkedIndices.includes(index) ? 0.7 : 1,
-});
