@@ -26,6 +26,7 @@ export default function PaymentForm() {
     const selfieRef = useRef(null);
     const [accepted, setAccepted] = useState(false);
     const [inputFocused, setInputFocused] = useState(false);
+    const [focusedInput, setFocusedInput] = useState(null);
 
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         resolver: zodResolver(schema)
@@ -185,7 +186,7 @@ export default function PaymentForm() {
                         <label style={labelStyle}>Nome Completo</label>
                         <input
                             {...register('nome')}
-                            style={inputFocused ? {...inputStyle, ...inputFocusStyle} : inputStyle}
+                            style={focusedInput === 'nome' ? {...inputStyle, ...inputFocusStyle} : inputStyle}
                             onFocus={() => setInputFocused(true)}
                             onBlur={() => setInputFocused(false)}
                         />
@@ -197,7 +198,7 @@ export default function PaymentForm() {
                         <input
                             type="email"
                             {...register('email')}
-                            style={inputFocused ? {...inputStyle, ...inputFocusStyle} : inputStyle}
+                            style={focusedInput === 'email' ? {...inputStyle, ...inputFocusStyle} : inputStyle}
                             onFocus={() => setInputFocused(true)}
                             onBlur={() => setInputFocused(false)}
                         />
@@ -214,7 +215,7 @@ export default function PaymentForm() {
                                     {...field}
                                     mask="(00) 00000-0000"
                                     placeholder="(00) 00000-0000"
-                                    style={inputFocused ? {...inputStyle, ...inputFocusStyle} : inputStyle}
+                                    style={focusedInput === 'telefone' ? {...inputStyle, ...inputFocusStyle} : inputStyle}
                                         onFocus={() => setInputFocused(true)}
                                         onBlur={() => setInputFocused(false)}
                                 />
