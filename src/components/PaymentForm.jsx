@@ -25,6 +25,7 @@ export default function PaymentForm() {
     const fotoRef = useRef(null);
     const selfieRef = useRef(null);
     const [accepted, setAccepted] = useState(false);
+    const [inputFocused, setInputFocused] = useState(false);
 
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         resolver: zodResolver(schema)
@@ -184,7 +185,9 @@ export default function PaymentForm() {
                         <label style={labelStyle}>Nome Completo</label>
                         <input
                             {...register('nome')}
-                            style={inputStyle}
+                            style={inputFocused ? {...inputStyle, ...inputFocusStyle} : inputStyle}
+                            onFocus={() => setInputFocused(true)}
+                            onBlur={() => setInputFocused(false)}
                         />
                         {errors.nome && <span style={errorStyle}>{errors.nome.message}</span>}
                     </div>
@@ -194,7 +197,9 @@ export default function PaymentForm() {
                         <input
                             type="email"
                             {...register('email')}
-                            style={inputStyle}
+                            style={inputFocused ? {...inputStyle, ...inputFocusStyle} : inputStyle}
+                            onFocus={() => setInputFocused(true)}
+                            onBlur={() => setInputFocused(false)}
                         />
                         {errors.email && <span style={errorStyle}>{errors.email.message}</span>}
                     </div>
@@ -209,7 +214,9 @@ export default function PaymentForm() {
                                     {...field}
                                     mask="(00) 00000-0000"
                                     placeholder="(00) 00000-0000"
-                                    style={inputStyle}
+                                    style={inputFocused ? {...inputStyle, ...inputFocusStyle} : inputStyle}
+                                        onFocus={() => setInputFocused(true)}
+                                        onBlur={() => setInputFocused(false)}
                                 />
                             )}
                         />
@@ -322,7 +329,14 @@ const inputStyle = {
     border: '1px solid #ccc',
     backgroundColor: '#ffffff',
     color: '#000000',
-    outlineColor: '#0063F7',
+    outline: 'none',
+    boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+};
+
+const inputFocusStyle = {
+    borderColor: '#0063F7',
+    boxShadow: '0 0 8px rgba(0, 99, 247, 0.5)',
 };
 
 const fieldContainer = {
@@ -333,8 +347,10 @@ const fieldContainer = {
 
 const labelStyle = {
     fontSize: '14px',
-    color: '#000000',
-    fontWeight: 'bold',
+    color: '#222',
+    fontWeight: '600',
+    marginBottom: '6px',
+    textShadow: '0 1px 1px rgba(0,0,0,0.05)',
 };
 
 const errorStyle = {
@@ -364,5 +380,5 @@ const uploadButtonStyle = {
     transition: 'background-color 0.3s',
     border: 'none',
     outline: 'none',
-    boxShadow: '0 14px 20px rgba(0, 99, 247, 0.4)'
+    boxShadow: '0 8px 20px rgba(0, 99, 247, 0.4)'
 };
