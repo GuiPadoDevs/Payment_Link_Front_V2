@@ -5,6 +5,7 @@ export default function AdminPanel() {
     const [links, setLinks] = useState([]);
     const [loading, setLoading] = useState(false);
     const [redirectUrl, setRedirectUrl] = useState('');
+    const [checkedIndices, setCheckedIndices] = useState([]);
 
     const generateLink = async () => {
         if (!redirectUrl) {
@@ -108,6 +109,18 @@ export default function AdminPanel() {
                                         style={copyButtonStyle}
                                     >
                                         Copiar
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setCheckedIndices((prev) =>
+                                                prev.includes(index)
+                                                    ? prev.filter((i) => i !== index)
+                                                    : [...prev, index]
+                                            );
+                                        }}
+                                        style={checkButtonStyle}
+                                    >
+                                        ✅
                                     </button>
                                 </li>
                             ))}
@@ -250,4 +263,16 @@ const inputStyle = {
     backgroundColor: '#ffffff',
     color: '#000000',
     outlineColor: '#0063F7',
+};
+
+const checkButtonStyle = {
+    padding: '8px 12px',
+    backgroundColor: '#00C853', // verde
+    color: '#ffffff',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '12px',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
 };
