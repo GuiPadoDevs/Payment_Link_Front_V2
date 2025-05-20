@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function AdminPanel({ onLogout }) {
+export default function AdminPanel() {
     const [links, setLinks] = useState([]);
     const [loading, setLoading] = useState(false);
     const [redirectUrl, setRedirectUrl] = useState('');
@@ -14,9 +14,20 @@ export default function AdminPanel({ onLogout }) {
 
         setLoading(true);
         try {
+            // TODO: Fazer dinamico link producao e local
+
+            // -> URL Local
+            // const apiUrl = process.env.REACT_APP_API_URL;
+            // const { data } = await axios.post(`http://localhost:3001/api/generate-link`, {
+            //     redirectUrl
+            // });
+
+            // -> URL Producao
             const { data } = await axios.post(`https://payment-link-server-v2.vercel.app/api/generate-link`, {
                 redirectUrl
             });
+
+            console.log('data', data);
 
             const fullLink = `${window.location.origin}/pagamento/${data.id.split('/').pop()}`;
             setLinks([...links, { url: fullLink, redirectUrl }]);
@@ -32,15 +43,8 @@ export default function AdminPanel({ onLogout }) {
         <div className="admin-panel">
             <div style={pageStyle}>
                 <header style={headerStyle}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div>
-                            <h1 style={headerTitleStyle}>Guaraci</h1>
-                            <p style={headerSubtitleStyle}>Pagamento via link</p>
-                        </div>
-                        <button onClick={onLogout} style={logoutButtonStyle}>
-                            Sair
-                        </button>
-                    </div>
+                    <h1 style={headerTitleStyle}>Guaraci</h1>
+                    <p style={headerSubtitleStyle}>Pagamento via link</p>
                 </header>
                 <main style={mainStyle}>
                     <form style={formStyle}>
@@ -146,17 +150,6 @@ const headerSubtitleStyle = {
     margin: 0,
     fontSize: '16px',
     fontWeight: 'normal',
-};
-
-const logoutButtonStyle = {
-    backgroundColor: '#f44336',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    padding: '10px 16px',
-    fontWeight: 'bold',
-    fontSize: '14px',
-    cursor: 'pointer',
 };
 
 const mainStyle = {
