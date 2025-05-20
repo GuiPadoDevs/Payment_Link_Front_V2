@@ -116,9 +116,18 @@ export default function PaymentForm() {
             }
         } catch (err) {
             console.error('Erro ao enviar pagamento:', err);
-            alert('Erro ao enviar pagamento. Tente novamente.' + err.message);
+            if (err.response) {
+                alert('Data:' + err.response.data);
+                alert('Status:' + err.response.status);
+                alert('Headers:' + err.response.headers);
+            } else if (err.request) {
+                alert('Request feito, sem resposta:' + err.request);
+            } else {
+                alert('Erro desconhecido:' + err.message);
+            }
+            alert('Erro ao enviar pagamento. Tente novamente.\n' + err.message);
         }
-    };
+};
 
     if (isLoading) {
         return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
