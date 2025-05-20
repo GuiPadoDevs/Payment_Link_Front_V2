@@ -101,6 +101,7 @@ export default function PaymentForm() {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+                timeout: 60000,
             });
 
             alert('Pagamento enviado com sucesso!');
