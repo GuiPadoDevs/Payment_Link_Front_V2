@@ -45,14 +45,14 @@ export default function PaymentForm() {
         pingBackend();
     }, []);
 
-    const handleFileChange = (e, setPreview) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => setPreview(reader.result);
-            reader.readAsDataURL(file);
-        }
-    };
+    // const handleFileChange = (e, setPreview) => {
+    //     const file = e.target.files?.[0];
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => setPreview(reader.result);
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
 
     const onSubmit = async (data) => {
         if (!fotoRef.current?.files[0] || !selfieBase64) {
@@ -73,11 +73,22 @@ export default function PaymentForm() {
 
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => formData.append(key, value));
-        formData.append('fotoDocumento', fotoRef.current.files[0]);
+
+        const fotoFile = isMobileDevice() && fotoRef.current.compressedFile
+            ? fotoRef.current.compressedFile
+            : fotoRef.current.files[0];
+        formData.append('fotoDocumento', fotoFile);
+
         if (selfieBase64) {
-            const selfieFile = dataURLtoFile(selfieBase64, 'selfie.png');
+            const selfieFile = dataURLtoFile(selfieBase64, 'selfie.jpg');
             formData.append('selfieDocumento', selfieFile);
         }
+        // formData.append('fotoDocumento', fotoRef.current.files[0]);
+        // if (selfieBase64) {
+        //     const selfieFile = dataURLtoFile(selfieBase64, 'selfie.png');
+        //     formData.append('selfieDocumento', selfieFile);
+        // }
+
         formData.append('linkId', linkId);
 
         try {
@@ -139,6 +150,48 @@ export default function PaymentForm() {
     function isMobileDevice() {
         return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
+
+    const compressImage = (file, maxWidth = 1024, quality = 0.7) =>
+        new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const scale = maxWidth / img.width;
+                    canvas.width = maxWidth;
+                    canvas.height = img.height * scale;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    canvas.toBlob(
+                        (blob) => {
+                            resolve(new File([blob], file.name, { type: 'image/jpeg' }));
+                        },
+                        'image/jpeg',
+                        quality
+                    );
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+    const handleFileChange = async (e, setPreview) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        let processedFile = file;
+        if (isMobileDevice()) {
+            processedFile = await compressImage(file);
+        }
+
+        const reader = new FileReader();
+        reader.onloadend = () => setPreview(reader.result);
+        reader.readAsDataURL(processedFile);
+
+        fotoRef.current.compressedFile = processedFile; // guardando versão compactada
+    };
 
     const handleMouseOver = (e) => {
         e.target.style.backgroundColor = '#0052cc';
