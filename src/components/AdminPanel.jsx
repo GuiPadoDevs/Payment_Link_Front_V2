@@ -40,6 +40,18 @@ export default function AdminPanel() {
         }
     };
 
+    const handleMouseOver = (e) => {
+        e.target.style.backgroundColor = '#0052cc';
+        e.target.style.boxShadow = '0 8px 16px rgba(0, 99, 247, 0.6)';
+        e.target.style.transform = 'translateY(-2px)';
+    };
+
+    const handleMouseOut = (e) => {
+        e.target.style.backgroundColor = '#0063F7';
+        e.target.style.boxShadow = '0 4px 8px rgba(0, 99, 247, 0.4)';
+        e.target.style.transform = 'translateY(0)';
+    };
+
     return (
         <div className="admin-panel">
             <div style={pageStyle}>
@@ -71,6 +83,8 @@ export default function AdminPanel() {
                                 backgroundColor: !redirectUrl ? '#ccc' : '#0063F7',
                                 cursor: !redirectUrl ? 'not-allowed' : 'pointer',
                             }}
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}
                         >
                             {loading ? 'Gerando...' : 'Gerar Link Único'}
                         </button>
@@ -196,6 +210,7 @@ const buttonStyle = {
     fontWeight: 'bold',
     cursor: 'pointer',
     transition: 'background-color 0.3s',
+    boxShadow: '0 14px 20px rgba(0, 99, 247, 0.4)'
 };
 
 const listStyle = {

@@ -126,6 +126,18 @@ export default function PaymentForm() {
         return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
 
+    const handleMouseOver = (e) => {
+        e.target.style.backgroundColor = '#0052cc';
+        e.target.style.boxShadow = '0 8px 16px rgba(0, 99, 247, 0.6)';
+        e.target.style.transform = 'translateY(-2px)';
+    };
+
+    const handleMouseOut = (e) => {
+        e.target.style.backgroundColor = '#0063F7';
+        e.target.style.boxShadow = '0 4px 8px rgba(0, 99, 247, 0.4)';
+        e.target.style.transform = 'translateY(0)';
+    };
+
     return (
         <div style={{
             minHeight: '100vh',
@@ -216,6 +228,8 @@ export default function PaymentForm() {
                                 onChange={(e) => handleFileChange(e, setFotoPreview)}
                                 required
                                 style={{ display: 'none' }}
+                                onMouseOver={handleMouseOver}
+                                onMouseOut={handleMouseOut}
                             />
                         </label>
                         {fotoPreview && (
@@ -247,6 +261,8 @@ export default function PaymentForm() {
                                         }}
                                         required
                                         style={{ display: 'none' }}
+                                        onMouseOver={handleMouseOver}
+                                        onMouseOut={handleMouseOut}
                                     />
                                 </label>
                                 {selfiePreview && (
@@ -285,18 +301,10 @@ export default function PaymentForm() {
                             fontWeight: 'bold',
                             cursor: 'pointer',
                             transition: 'background-color 0.3s',
-                            boxShadow: '0 8px 20px rgba(0, 99, 247, 0.4)'
+                            boxShadow: '0 14px 20px rgba(0, 99, 247, 0.4)'
                         }}
-                        onMouseOver={(e) => {
-                            e.target.style.backgroundColor = '#0052cc';
-                            e.target.style.boxShadow = '0 8px 16px rgba(0, 99, 247, 0.6)';
-                            e.target.style.transform = 'translateY(-2px)';
-                        }}
-                        onMouseOut={(e) => {
-                            e.target.style.backgroundColor = '#0063F7';
-                            e.target.style.boxShadow = '0 4px 8px rgba(0, 99, 247, 0.4)';
-                            e.target.style.transform = 'translateY(0)';
-                        }}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
                     >
                         Concluir
                     </button>
@@ -356,4 +364,5 @@ const uploadButtonStyle = {
     transition: 'background-color 0.3s',
     border: 'none',
     outline: 'none',
+    boxShadow: '0 14px 20px rgba(0, 99, 247, 0.4)'
 };

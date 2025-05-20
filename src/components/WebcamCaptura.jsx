@@ -98,6 +98,8 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
                             marginTop: '12px',
                             // width: isMobile ? 'auto' : '200px'
                         }}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
                     >
                         Tirar Foto
                     </button>
@@ -134,6 +136,7 @@ const uploadButtonStyle = {
     transition: 'background-color 0.3s',
     border: 'none',
     outline: 'none',
+    boxShadow: '0 14px 20px rgba(0, 99, 247, 0.4)'
 };
 
 const imagePreviewStyle = {
