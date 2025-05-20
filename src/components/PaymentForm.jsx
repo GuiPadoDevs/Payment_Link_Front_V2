@@ -285,7 +285,8 @@ export default function PaymentForm() {
                             fontWeight: 'bold',
                             cursor: 'pointer',
                             transition: 'background-color 0.3s',
-                            boxShadow: '0 4px 8px rgba(0, 99, 247, 0.4)'
+                            boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+                            transform: 'translateY(0)',
                         }}
                         onMouseOver={(e) => {
                             e.target.style.backgroundColor = '#0052cc';
