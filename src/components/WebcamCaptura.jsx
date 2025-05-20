@@ -56,6 +56,18 @@ export default function WebcamCapture({ onCapture, label = "Capturar Imagem" }) 
         setShouldStart(false);
     };
 
+    const handleMouseOver = (e) => {
+        e.target.style.backgroundColor = '#0052cc';
+        e.target.style.boxShadow = '0 8px 16px rgba(0, 99, 247, 0.6)';
+        e.target.style.transform = 'translateY(-2px)';
+    };
+
+    const handleMouseOut = (e) => {
+        e.target.style.backgroundColor = '#0063F7';
+        e.target.style.boxShadow = '0 4px 8px rgba(0, 99, 247, 0.4)';
+        e.target.style.transform = 'translateY(0)';
+    };
+
     return (
         <div style={{ marginTop: '10px' }}>
             {!streaming && (
