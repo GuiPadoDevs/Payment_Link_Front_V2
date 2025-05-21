@@ -99,7 +99,6 @@ export default function PaymentForm() {
             // });
 
             // -> URL Producao
-            alert('Enviando pagamento...');
             console.log(formData);
             const response = await axios.post('https://payment-link-server-v2.vercel.app/api/submit-payment', formData, {
                 onUploadProgress: (e) =>
@@ -110,7 +109,6 @@ export default function PaymentForm() {
                 timeout: 60000,
             });
 
-            alert('Pagamento enviado com sucesso!');
             const { redirectUrl } = response.data;
 
             if (redirectUrl) {
@@ -123,15 +121,6 @@ export default function PaymentForm() {
             }
         } catch (err) {
             console.error('Erro ao enviar pagamento:', err);
-            if (err.response) {
-                alert('Data:' + err.response.data);
-                alert('Status:' + err.response.status);
-                alert('Headers:' + err.response.headers);
-            } else if (err.request) {
-                alert('Request feito, sem resposta:' + err.request);
-            } else {
-                alert('Erro desconhecido:' + err.message);
-            }
             alert('Erro ao enviar pagamento. Tente novamente.\n' + err.message);
         }
 };
