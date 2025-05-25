@@ -226,7 +226,7 @@ export default function PaymentForm() {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        padding: '20px',
+                        padding: '30px',
                         backgroundColor: '#ffffff',
                         borderRadius: '12px',
                         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
@@ -237,7 +237,7 @@ export default function PaymentForm() {
                             src="/logo.png"
                             alt="Logo"
                             style={{
-                                width: '100px',
+                                width: '120px',
                                 height: 'auto',
                                 display: 'block',
                             }}
