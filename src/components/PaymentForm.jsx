@@ -222,6 +222,9 @@ export default function PaymentForm() {
                         fontFamily: 'Arial, sans-serif'
                     }}
                 >
+                    <div className="flex justify-center mb-4">
+                        <img src="../logo.png" alt="Logo" className="h-16 object-contain" />
+                    </div>
                     <h1 style={{
                         color: '#0063F7',
                         textAlign: 'center',
@@ -366,6 +369,23 @@ export default function PaymentForm() {
                         Concluir
                     </button>
                 </form>
+                <a
+                    href="https://wa.me/5514988128128"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="fixed bottom-4 right-4 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-transform hover:scale-105 z-50"
+                    aria-label="Fale conosco pelo WhatsApp"
+                >
+                    <svg
+                        className="w-6 h-6"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M12.003 2.001a9.944 9.944 0 00-9.939 9.95 9.907 9.907 0 001.362 5.017L2 22l5.177-1.358a9.94 9.94 0 004.826 1.234h.004a9.946 9.946 0 000-19.892zm5.814 14.553c-.244.688-1.428 1.348-2.007 1.418-.512.06-1.172.086-1.896-.12-.436-.122-1.002-.326-1.738-.644-3.063-1.326-5.058-4.59-5.213-4.814-.152-.226-1.245-1.656-1.245-3.16s.786-2.26 1.066-2.574c.28-.312.608-.39.81-.39.204 0 .407.002.585.01.188.008.442-.072.692.527.26.612.882 2.118.96 2.27.08.152.132.33.026.53-.106.2-.16.33-.318.504-.158.172-.333.385-.48.52-.158.15-.322.314-.138.616.184.302.818 1.35 1.754 2.187 1.206 1.086 2.226 1.424 2.53 1.582.305.158.48.132.66-.08.184-.214.752-.874.954-1.174.2-.302.406-.25.692-.152.284.1 1.792.842 2.1.994.308.152.512.226.586.352.072.126.072.73-.172 1.418z" />
+                    </svg>
+                </a>
+
             </div>
         </div>
     );
