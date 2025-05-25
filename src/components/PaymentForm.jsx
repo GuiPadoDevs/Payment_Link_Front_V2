@@ -223,7 +223,7 @@ export default function PaymentForm() {
                     }}
                 >
                     <div className="flex justify-center mb-4">
-                        <img src="../logo.png" alt="Logo" className="h-16 object-contain" />
+                        <img src="/logo.png" alt="Logo" className="h-16 object-contain" />
                     </div>
                     <h1 style={{
                         color: '#0063F7',
