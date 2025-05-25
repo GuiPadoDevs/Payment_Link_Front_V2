@@ -222,14 +222,35 @@ export default function PaymentForm() {
                         fontFamily: 'Arial, sans-serif'
                     }}
                 >
-                    <div className="flex justify-center mb-4">
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: '20px',
+                        backgroundColor: '#ffffff',
+                        borderRadius: '12px',
+                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                        maxWidth: '150px',
+                        margin: '0 auto'
+                    }}>
                         <img
                             src="/logo.png"
                             alt="Logo"
-                            className="h-16 object-contain"
-                            style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }}
+                            style={{
+                                width: '100px',
+                                height: 'auto',
+                                display: 'block',
+                            }}
                         />
                     </div>
+                    {/*<div className="flex justify-center mb-4">*/}
+                    {/*    <img*/}
+                    {/*        src="/logo.png"*/}
+                    {/*        alt="Logo"*/}
+                    {/*        className="h-16 object-contain"*/}
+                    {/*        style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                     <h1 style={{
                         color: '#0063F7',
                         textAlign: 'center',
