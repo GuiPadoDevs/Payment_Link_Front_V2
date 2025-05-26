@@ -391,9 +391,9 @@ export default function PaymentForm() {
                         position: 'fixed',
                         bottom: '16px',
                         right: '16px',
-                        backgroundColor: '#25D366',
+                        // backgroundColor: '#25D366',
                         borderRadius: '50%',
-                        padding: '12px',
+                        // padding: '12px',
                         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                         transition: 'transform 0.3s',
                         cursor: 'pointer',
@@ -406,8 +406,8 @@ export default function PaymentForm() {
                         src="/whatsapp-logo.png"
                         alt="WhatsApp"
                         style={{
-                            width: '32px',
-                            height: '32px',
+                            width: '50px',
+                            height: '50px',
                         }}
                     />
                 </a>
