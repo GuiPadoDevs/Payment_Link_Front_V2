@@ -226,10 +226,10 @@ export default function PaymentForm() {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        padding: '30px',
-                        backgroundColor: '#ffffff',
-                        borderRadius: '12px',
-                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                        // padding: '30px',
+                        // backgroundColor: '#ffffff',
+                        // borderRadius: '12px',
+                        // boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
                         maxWidth: '150px',
                         margin: '0 auto'
                     }}>
