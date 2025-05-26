@@ -403,7 +403,7 @@ export default function PaymentForm() {
                     aria-label="Fale conosco pelo WhatsApp"
                 >
                     <img
-                        src="/whatsapp.jpg"
+                        src="/whatsapp-logo.png"
                         alt="WhatsApp"
                         style={{
                             width: '32px',
