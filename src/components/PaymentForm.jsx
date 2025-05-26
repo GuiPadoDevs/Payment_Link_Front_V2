@@ -237,7 +237,7 @@ export default function PaymentForm() {
                             src="/logo.png"
                             alt="Logo"
                             style={{
-                                width: '120px',
+                                width: '150px',
                                 height: 'auto',
                                 display: 'block',
                             }}
