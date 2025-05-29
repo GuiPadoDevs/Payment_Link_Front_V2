@@ -34,7 +34,8 @@ export default function PaymentForm() {
     useEffect(() => {
         const pingBackend = async () => {
             try {
-                await axios.get('https://payment-link-server-v2.vercel.app/api/ping');
+                // await axios.get('https://payment-link-server-v2.vercel.app/api/ping');
+                await axios.get('http://172.17.1.11:3001/api/ping');
                 console.log('Servidor acordado');
                 setIsLoading(false);
             } catch (err) {
@@ -100,7 +101,8 @@ export default function PaymentForm() {
 
             // -> URL Producao
             console.log(formData);
-            const response = await axios.post('https://payment-link-server-v2.vercel.app/api/submit-payment', formData, {
+            // const response = await axios.post('https://payment-link-server-v2.vercel.app/api/submit-payment', formData, {
+            const response = await axios.post('http://172.17.1.11:3001/api/submit-payment', formData, {
                 onUploadProgress: (e) =>
                     setProgress(Math.round((e.loaded * 100) / (e.total || 1))),
                 headers: {
